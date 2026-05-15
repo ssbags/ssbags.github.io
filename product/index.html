@@ -104,7 +104,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
@@ -122,7 +122,15 @@
 
         // ১. অটো লগইন এবং ডেটা লিসেনার
         const init = async () => {
-            await signInAnonymously(auth);
+            const initAuth = async () => {
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+              } else {
+                await signInAnonymously(auth);
+              }
+            };
+            await initAuth();
+            
             onAuthStateChanged(auth, (u) => {
                 user = u;
                 if(user) fetchImages();
@@ -134,9 +142,10 @@
             const q = collection(db, 'artifacts', appId, 'public', 'data', 'images');
             onSnapshot(q, (snapshot) => {
                 imagesData = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                imagesData.sort((a, b) => b.timestamp - a.timestamp);
+                imagesData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                 renderGallery();
             }, (err) => {
+                console.error("Firestore Error:", err);
                 document.getElementById('status-text').innerText = "ডেটা লোড করতে সমস্যা হচ্ছে।";
             });
         };
@@ -145,8 +154,9 @@
         const renderAuthUI = () => {
             const container = document.getElementById('auth-controls');
             if(isAdmin) {
-                container.innerHTML = `<button onclick="window.logout()" class="text-red-500 font-bold text-sm bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">লগআউট</button>`;
+                container.innerHTML = `<button id="logout-btn" class="text-red-500 font-bold text-sm bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">লগআউট</button>`;
                 document.getElementById('admin-area').classList.remove('hidden');
+                document.getElementById('logout-btn').onclick = window.logout;
             } else {
                 container.innerHTML = `<button onclick="window.openModal('login-modal')" class="bg-blue-600 text-white font-bold text-sm px-4 py-2 rounded-lg">অ্যাডমিন লগইন</button>`;
                 document.getElementById('admin-area').classList.add('hidden');
@@ -197,7 +207,7 @@
 
         // ৩. ইমেজ নেমিং লজিক (bag41, bag42...)
         const getNextBagName = () => {
-            const bagFiles = imagesData.filter(i => i.name.startsWith('bag'));
+            const bagFiles = imagesData.filter(i => i.name && i.name.startsWith('bag'));
             let maxNum = 40;
             bagFiles.forEach(i => {
                 const match = i.name.match(/bag(\d+)/i);
@@ -237,6 +247,7 @@
                     timestamp: Date.now()
                 });
             } catch (err) {
+                console.error("Upload failed", err);
                 alert("আপলোড ব্যর্থ হয়েছে।");
             } finally {
                 loader.classList.add('hidden');
@@ -304,8 +315,9 @@
             const newName = document.getElementById('new-name-input').value.replace(/\s+/g, '');
             if(!newName) return;
 
-            const oldData = imagesData.find(i => i.id === id);
-            const ext = oldData.name.split('.').pop();
+            const imageObj = imagesData.find(i => i.id === id);
+            if (!imageObj) return;
+            const ext = imageObj.name.split('.').pop();
             
             try {
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'images', id);
@@ -319,9 +331,12 @@
         window.deleteImage = async (id, path) => {
             if(!confirm("আপনি কি নিশ্চিতভাবে মুছে ফেলতে চান?")) return;
             try {
-                await deleteObject(ref(storage, path));
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'images', id));
+                const storageRef = ref(storage, path);
+                await deleteObject(storageRef);
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'images', id);
+                await deleteDoc(docRef);
             } catch (err) {
+                console.error("Delete failed", err);
                 alert("ডিলিট করতে সমস্যা হয়েছে।");
             }
         };
