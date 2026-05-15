@@ -3,484 +3,691 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.S. BAGS | সেরা কাস্টম ব্যাগ ম্যানুফ্যাকচারার ও পাইকারি বিক্রেতা</title>
+    <title>S.S. BAGS | প্রিমিয়াম কাস্টম ব্যাগ ম্যানুফ্যাকচারার ও পাইকারি সরবরাহকারী</title>
     <meta name="description" id="meta-desc" content="S.S. BAGS - সরাসরি ফ্যাক্টরি থেকে সেরা মানের কাস্টমাইজড স্কুল, কলেজ, অফিস এবং কর্পোরেট ব্যাগ সরবরাহকারী। ঢাকা কেরানীগঞ্জে আমাদের নিজস্ব ফ্যাক্টরি।">
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    
+    <!-- Favicon -->
+	<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>    
+    <!-- External Resources -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Hind Siliguri', sans-serif; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Hind Siliguri', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: #fcfcfc;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* উন্নত বাংলা ক্লিয়ারিটি */
+        .bn-sharp { font-weight: 700; line-height: 1.6; letter-spacing: 0.02em; }
+        .bn-body { line-height: 1.8; color: #475569; }
+
         .admin-modal, .zoom-modal, .wa-popup { display: none; }
         .active { display: flex !important; }
+        
+        /* প্রফেশনাল নেভিগেশন */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid #2563eb;
+            transition: all 0.4s ease;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            color: #334155;
+            font-size: 15px;
+        }
+        .nav-link:hover { background: #eff6ff; color: #2563eb; transform: translateY(-1px); }
+
+        /* স্লাইডার স্টাইল */
+        .slider-wrapper {
+            height: 380px;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.15);
+            border: 4px solid white;
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        .slide.active { opacity: 1; transform: scale(1.05); }
+
+        /* সোশ্যাল বাটন ফিক্স */
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: white !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .social-btn svg { width: 22px; height: 22px; stroke: white; stroke-width: 2.5px; fill: none; }
+        .social-btn:hover { transform: translateY(-4px) rotate(5deg); }
+        
+        .bg-facebook { background: #1877F2; }
+        .bg-youtube { background: #FF0000; }
+        .bg-instagram { background: #E4405F; }
+        .bg-twitter { background: #1DA1F2; }
+        .bg-linkedin { background: #0077B5; }
+        .bg-generic { background: #475569; }
+
+        /* চ্যাট উইজেট ডিজাইন */
+        .wa-chat-container { width: 320px; border-radius: 1.5rem; overflow: hidden; }
+        .wa-header { background: linear-gradient(135deg, #075e54, #128c7e); padding: 20px; }
+        .wa-chat-body { 
+            background: #e5ddd5 url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); 
+            min-height: 150px; 
+        }
+
         .loader { border-top-color: #2563eb; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        .product-card:hover img { transform: scale(1.05); }
+        
+        .admin-scroll::-webkit-scrollbar { width: 6px; }
+        .admin-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* হরিজন্টাল ফিটচার বক্স স্টাইল */
+        .feat-card {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 1.25rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .feat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            border-color: #2563eb;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="text-slate-900 bg-slate-50">
 
-    <!-- Navigation -->
-    <nav class="glass-nav shadow-md sticky top-0 z-40 border-b">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Header Navigation -->
+    <nav class="glass-nav sticky top-0 z-50 py-2 px-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="flex items-center gap-2">
-                <img id="site-logo" src="logo.png" alt="S.S. BAGS" class="h-10 md:h-12 w-auto object-contain">
-                <span id="site-name-display" class="text-xl font-bold text-blue-800">S.S. BAGS</span>
+                <img id="site-logo" src="" alt="Logo" class="h-10 md:h-12 w-auto bg-white rounded shadow-sm">
+                <span id="site-name-display" class="text-xl font-black text-blue-900 tracking-tighter">S.S. BAGS</span>
             </a>
             
-            <div class="hidden lg:flex items-center gap-6 font-semibold text-gray-600">
-                <a href="#home" class="hover:text-blue-600">হোম</a>
-                <a href="#features" class="hover:text-blue-600">বিশেষত্ব</a>
-                <a href="#products" class="hover:text-blue-600">পণ্যসমূহ</a>
-                <a href="#seo-content" class="hover:text-blue-600">বিস্তারিত</a>
+            <div id="header-nav-links" class="hidden lg:flex items-center gap-1 font-bold text-sm">
+                <!-- Navigation links -->
             </div>
 
-            <div class="flex items-center gap-3">
-                <button onclick="openAdminModal()" class="p-2 text-gray-400 hover:text-blue-600 transition">
-                    <i data-lucide="settings" class="w-6 h-6"></i>
+            <div class="flex items-center gap-2">
+                <button onclick="openAdminModal()" class="p-2 rounded-xl bg-slate-100 text-slate-500 hover:bg-blue-600 hover:text-white transition">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
                 </button>
-                <a id="nav-wa-btn" href="#" target="_blank" class="bg-green-500 text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-green-600 shadow-lg transition">
-                    <i data-lucide="phone" class="w-4 h-4"></i> <span class="hidden sm:inline">অর্ডার দিন</span>
+                <a id="nav-wa-btn" href="#" target="_blank" class="bg-green-600 text-white px-5 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-green-700 shadow-xl transition active:scale-95 text-sm">
+                    <i data-lucide="phone-call" class="w-4 h-4"></i> <span class="hidden sm:inline font-bold">অর্ডার</span>
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="bg-blue-900 text-white py-20 lg:py-32 relative overflow-hidden">
-        <div class="container mx-auto px-4 relative z-10 text-center lg:text-left">
-            <div class="max-w-3xl">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-black leading-tight mb-6"></h1>
-                <p id="hero-sub" class="text-lg md:text-xl opacity-90 mb-10"></p>
-                <div class="flex flex-wrap justify-center lg:justify-start gap-4">
-                    <a href="#products" class="bg-white text-blue-900 px-8 py-3 rounded-xl font-bold hover:bg-gray-100">ক্যাটালগ দেখুন</a>
-                    <a href="#seo-content" class="bg-blue-600 border border-blue-400 px-8 py-3 rounded-xl font-bold hover:bg-blue-700">আমাদের সম্পর্কে</a>
+    <!-- Hero Section: Split Layout -->
+    <section id="home" class="py-12 lg:py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="relative order-2 lg:order-1">
+                <div class="slider-wrapper">
+                    <div id="hero-slider" class="h-full relative bg-slate-100"></div>
+                </div>
+                <div id="slider-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
+            </div>
+            <div class="text-center lg:text-left space-y-6 order-1 lg:order-2">
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-black text-slate-900 leading-tight"></h1>
+                <p id="hero-sub" class="text-lg md:text-xl text-slate-600 bn-sharp"></p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#products" class="bg-blue-600 text-white px-8 py-3.5 rounded-2xl font-black text-lg hover:bg-blue-700 shadow-xl transition">ক্যাটালগ দেখুন</a>
+                    <a href="#features" class="bg-slate-50 text-slate-700 px-8 py-3.5 rounded-2xl font-bold text-lg hover:bg-slate-100 border border-slate-200 transition tracking-widest uppercase">Specialties</a>
                 </div>
             </div>
         </div>
-        <div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none hidden lg:block">
-            <i data-lucide="shopping-bag" class="w-full h-full text-white"></i>
-        </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 id="feat-title" class="text-3xl font-bold mb-12">আমাদের বিশেষত্বসমূহ</h2>
-            <div id="feat-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                <!-- Items Dynamic -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Gallery -->
-    <section id="products" class="py-20 bg-gray-50">
+    <!-- Features Section: Horizontal Slim -->
+    <section id="features" class="py-12 bg-slate-50 border-y border-slate-200">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">পণ্য ক্যাটালগ</h2>
-                <div class="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
-                <p class="mt-4 text-gray-500 italic">গুগল শিট থেকে অটো-আপডেট করা হচ্ছে</p>
+            <div id="feat-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- Dynamic Items -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic SEO Content Blocks -->
+    <section id="dynamic-content-blocks" class="py-16 bg-white space-y-16"></section>
+
+    <!-- Product Catalog -->
+    <section id="products" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-end mb-12 border-b-4 border-blue-600 pb-6">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Premium Collection</h2>
+                    <p class="text-blue-600 font-bold mt-1 bn-sharp">সরাসরি ফ্যাক্টরি থেকে আপডেট হচ্ছে</p>
+                </div>
+                <button onclick="fetchProducts()" class="p-3 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-100 transition shadow-sm">
+                    <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                </button>
             </div>
 
-            <div id="product-loader" class="flex flex-col items-center py-20">
-                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-                <p>ডাটা লোড হচ্ছে...</p>
+            <div id="product-loader" class="flex flex-col items-center py-16">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-slate-200 h-12 w-12 mb-4"></div>
+                <p class="font-bold text-slate-400">অপেক্ষা করুন...</p>
             </div>
             
             <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
         </div>
     </section>
 
-    <!-- SEO Content Section -->
-    <section id="seo-content" class="py-20 bg-white border-t border-b">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 id="seo-title" class="text-3xl font-bold mb-6 text-blue-900 leading-tight"></h2>
-                    <div id="seo-body" class="text-gray-700 leading-relaxed space-y-4 text-lg">
-                        <!-- Content via Admin -->
-                    </div>
-                </div>
-                <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100 shadow-inner">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-blue-800"><i data-lucide="info"></i> ব্যবসায়িক পরিচয়</h3>
-                    <p id="seo-sidebar" class="text-gray-600 italic mb-6"></p>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100">
-                        <h4 class="font-bold mb-2">কেন আমাদের বেছে নেবেন?</h4>
-                        <ul class="space-y-2 text-sm text-gray-500">
-                            <li>✓ সরাসরি ফ্যাক্টরি থেকে সাশ্রয়ী মূল্য</li>
-                            <li>✓ নিখুঁত কাস্টমাইজেশন ও লোগো প্রিন্টিং</li>
-                            <li>✓ স্কুল ও অফিসের জন্য প্রিমিয়াম সংগ্রহ</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer id="contact" class="bg-gray-900 text-white pt-20 pb-10">
+    <footer id="contact" class="bg-slate-950 text-white pt-20 pb-10 border-t border-white/5">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20 text-center md:text-left">
                 <div>
-                    <h3 class="text-2xl font-bold mb-6">S.S. BAGS</h3>
-                    <p id="footer-about" class="text-gray-400 mb-8 leading-relaxed"></p>
-                    <div id="social-links" class="flex gap-4"></div>
+                    <h3 class="text-3xl font-black mb-8 text-blue-500 tracking-tighter uppercase">S.S. BAGS</h3>
+                    <p id="footer-about" class="bn-sharp text-slate-400 mb-10 text-lg"></p>
+                    <div id="social-links" class="flex justify-center md:justify-start gap-3"></div>
                 </div>
+                
                 <div>
-                    <h4 class="text-lg font-bold mb-6 text-blue-400">যোগাযোগ</h4>
-                    <ul class="space-y-4 text-gray-400">
-                        <li class="flex items-start gap-3"><i data-lucide="map-pin" class="text-blue-500 w-5 h-5 shrink-0"></i> <span id="footer-addr"></span></li>
-                        <li class="flex items-center gap-3"><i data-lucide="phone" class="text-blue-500 w-5 h-5"></i> <span id="footer-wa"></span></li>
-                        <li class="flex items-center gap-3"><i data-lucide="mail" class="text-blue-500 w-5 h-5"></i> ssbagsbd8@gmail.com</li>
+                    <h4 class="text-xs font-black mb-8 text-blue-400 uppercase tracking-widest">নেভিগেশন</h4>
+                    <ul id="footer-nav-links" class="space-y-4 text-slate-400 font-bold text-lg"></ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-black mb-8 text-blue-400 uppercase tracking-widest">যোগাযোগ</h4>
+                    <ul class="space-y-6 text-slate-300 font-bold text-lg">
+                        <li class="flex items-start gap-4 justify-center md:justify-start">
+                            <i data-lucide="map-pin" class="text-blue-500 w-6 h-6 shrink-0"></i> 
+                            <span id="footer-addr" class="bn-sharp leading-snug"></span>
+                        </li>
+                        <li class="flex items-center gap-4 justify-center md:justify-start">
+                            <i data-lucide="phone" class="text-green-500 w-6 h-6"></i> 
+                            <span id="footer-wa" class="bn-sharp tracking-wider"></span>
+                        </li>
+                        <li class="flex items-center gap-4 justify-center md:justify-start">
+                            <i data-lucide="mail" class="text-red-500 w-6 h-6"></i> 
+                            <span id="footer-email" class="bn-sharp"></span>
+                        </li>
                     </ul>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
-                    <h4 class="text-lg font-bold mb-4">আমাদের নিউজলেটার</h4>
-                    <p class="text-xs text-gray-500 mb-4">নতুন ডিজাইন ও অফার জানতে আমাদের সাথে থাকুন।</p>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="ইমেইল দিন" class="bg-gray-900 border border-gray-700 p-2 rounded-lg text-sm flex-1 outline-none">
-                        <button class="bg-blue-600 px-4 py-2 rounded-lg text-sm font-bold">সাবস্ক্রাইব</button>
+
+                <div>
+                    <h4 class="text-xs font-black mb-8 text-blue-400 uppercase tracking-widest">নিউজলেটার</h4>
+                    <div class="flex flex-col gap-4">
+                        <input type="email" placeholder="আপনার ইমেইল" class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-sm outline-none focus:border-blue-600 transition shadow-inner">
+                        <button class="bg-blue-600 py-3 rounded-2xl font-black uppercase text-xs hover:bg-blue-700 shadow-xl transition active:scale-95">সাবস্ক্রাইব করুন</button>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs">
-                <p id="footer-copy"></p>
-                <p class="mt-2 uppercase tracking-widest opacity-50">Custom Bag Manufacturing Unit in Bangladesh</p>
+            
+            <div class="border-t border-slate-900 pt-10 text-center">
+                <p id="footer-copy" class="text-slate-500 text-sm mb-4 font-bold"></p>
+                <div id="dev-info-display" class="inline-block px-6 py-2.5 bg-blue-900/10 rounded-full cursor-pointer hover:bg-blue-800/20 transition border border-blue-900/10">
+                    <p class="text-blue-500 text-[10px] font-black uppercase tracking-[0.25em]"></p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Bubble -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="toggleWAPopup()" class="bg-green-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all">
-            <i data-lucide="message-circle" class="w-8 h-8"></i>
+    <!-- WhatsApp Professional Widget -->
+    <div class="fixed bottom-10 right-10 z-50">
+        <button onclick="toggleWAPopup()" class="bg-green-600 text-white p-4 rounded-[2rem] shadow-[0_20px_50px_rgba(37,211,102,0.4)] hover:scale-105 active:scale-90 transition-all border-4 border-white">
+            <i data-lucide="message-circle" class="w-10 h-10"></i>
         </button>
-        <div id="wa-popup" class="wa-popup absolute bottom-20 right-0 w-80 bg-white rounded-2xl shadow-2xl border overflow-hidden">
-            <div class="bg-green-600 p-4 text-white">
-                <h4 class="font-bold">সরাসরি মেসেজ দিন</h4>
-                <p class="text-xs opacity-80 font-light">আমরা সাধারণত ৩০ মিনিটে উত্তর দিই</p>
-            </div>
-            <div class="p-4">
-                <textarea id="wa-msg-input" placeholder="আপনার চাহিদা বা প্রশ্নটি লিখুন..." class="w-full border p-3 rounded-xl text-sm h-28 outline-none focus:border-green-500 resize-none"></textarea>
-                <button onclick="sendQuickWA()" class="w-full bg-green-500 text-white py-3 rounded-xl font-bold mt-2 hover:bg-green-700 transition">মেসেজ পাঠান</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Panel Modals -->
-    <div id="admin-modal" class="admin-modal fixed inset-0 bg-gray-900/80 backdrop-blur-md z-[100] items-center justify-center p-4">
-        <!-- Login Form -->
-        <div id="admin-login" class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm">
-            <h3 class="text-2xl font-bold mb-6 text-center text-blue-900">অ্যাডমিন প্রবেশ</h3>
-            <input type="password" id="admin-pass-in" placeholder="পাসওয়ার্ড দিন" class="w-full border p-4 rounded-2xl mb-4 outline-none focus:border-blue-600">
-            <button onclick="verifyAdmin()" class="w-full bg-blue-600 text-white py-3 rounded-2xl font-bold text-lg">লগইন</button>
-            <button onclick="closeAdminModal()" class="w-full text-gray-500 mt-4 text-sm font-bold">বন্ধ করুন</button>
-        </div>
-
-        <!-- Dashboard -->
-        <div id="admin-dashboard" class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-y-auto hidden">
-            <div class="flex justify-between items-center mb-8 border-b pb-6">
+        <div id="wa-popup" class="wa-popup absolute bottom-24 right-0 wa-chat-container bg-white shadow-2xl border border-slate-100 overflow-hidden animate-in slide-in-from-bottom-5">
+            <div class="wa-header text-white flex items-center gap-4">
+                <div class="relative">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-sm">
+                        <i data-lucide="user" class="w-7 h-7"></i>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 border-2 border-green-600 rounded-full"></div>
+                </div>
                 <div>
-                    <h3 class="text-2xl font-bold text-blue-900">অ্যাডমিন কন্ট্রোল সেন্টার</h3>
-                    <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Site Management</p>
-                </div>
-                <button onclick="closeAdminModal()" class="text-red-500 hover:bg-red-50 p-2 rounded-full transition"><i data-lucide="x"></i></button>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                <!-- Section 1: Main Settings -->
-                <div class="space-y-5">
-                    <h4 class="font-bold text-blue-600 border-b pb-1 text-xs uppercase tracking-wider">প্রধান সেটিংস</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">লোগো ইউআরএল</label>
-                            <input type="text" id="db-logo" class="w-full border p-2 rounded-lg text-sm bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">হোয়াটসঅ্যাপ নম্বর (লিঙ্ক এর জন্য)</label>
-                            <input type="text" id="db-wa" class="w-full border p-2 rounded-lg text-sm bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">গুগল শিট CSV লিঙ্ক</label>
-                            <input type="text" id="db-sheet" class="w-full border p-2 rounded-lg text-sm bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">অফিস ঠিকানা</label>
-                            <textarea id="db-addr" rows="2" class="w-full border p-2 rounded-lg text-sm bg-gray-50"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 2: Home Content -->
-                <div class="space-y-5">
-                    <h4 class="font-bold text-blue-600 border-b pb-1 text-xs uppercase tracking-wider">হোম ও এসইও কন্টেন্ট</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">হিরো টাইটেল</label>
-                            <input type="text" id="db-htitle" class="w-full border p-2 rounded-lg text-sm bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">হিরো সাবটাইটেল</label>
-                            <textarea id="db-hsub" rows="2" class="w-full border p-2 rounded-lg text-sm bg-gray-50"></textarea>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">SEO সেকশন টাইটেল</label>
-                            <input type="text" id="db-stitle" class="w-full border p-2 rounded-lg text-sm bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase">SEO ডেসক্রিপশন (মূল কন্টেন্ট)</label>
-                            <textarea id="db-sbody" rows="6" class="w-full border p-2 rounded-lg text-sm bg-gray-50"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 3: Social & Security -->
-                <div class="space-y-5">
-                    <h4 class="font-bold text-blue-600 border-b pb-1 text-xs uppercase tracking-wider">সোশ্যাল ও সিকিউরিটি</h4>
-                    <div class="bg-gray-50 p-4 rounded-xl space-y-4">
-                        <div id="db-social-list" class="space-y-2 max-h-32 overflow-y-auto"></div>
-                        <div class="flex gap-2">
-                            <select id="db-social-icon" class="border rounded p-2 text-xs bg-white">
-                                <option value="facebook">Facebook</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="youtube">YouTube</option>
-                                <option value="linkedin">LinkedIn</option>
-                                <option value="twitter">X / Twitter</option>
-                            </select>
-                            <input type="text" id="db-social-url" placeholder="URL" class="flex-1 border p-2 rounded text-xs bg-white">
-                            <button onclick="addSocial()" class="bg-blue-600 text-white px-3 rounded-lg font-bold">+</button>
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-red-100">
-                        <label class="text-[10px] font-bold text-red-500 uppercase">পাসওয়ার্ড পরিবর্তন করুন</label>
-                        <input type="password" id="db-newpass" placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক)" class="w-full border-2 border-red-50 p-2 rounded-lg text-sm mt-1 focus:border-red-200 outline-none">
-                    </div>
+                    <h4 class="font-black text-lg leading-none">S.S. BAGS Support</h4>
+                    <p class="text-[10px] font-bold opacity-90 mt-1 uppercase tracking-widest">Active Now • Sales Team</p>
                 </div>
             </div>
-
-            <div class="mt-12 flex gap-4">
-                <button onclick="saveAllSettings()" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl hover:bg-blue-700 transition">সব সেটিংস আপডেট করুন</button>
+            <div class="wa-chat-body p-6 flex flex-col justify-end">
+                <div class="bg-white p-3.5 rounded-2xl rounded-bl-none shadow-sm self-start max-w-[85%] border border-slate-200/50">
+                    <p class="text-sm font-bold text-slate-700 leading-relaxed">আসসালামু আলাইকুম! S.S. BAGS-এ আপনাকে স্বাগতম। আপনি কোন ধরণের ব্যাগ খুজছেন? আমাদের মেসেজ দিন।</p>
+                </div>
+            </div>
+            <div class="p-6 bg-white border-t border-slate-100">
+                <textarea id="wa-msg-input" placeholder="আপনার মেসেজ এখানে লিখুন..." class="w-full border-none p-4 rounded-2xl text-sm h-28 outline-none bg-slate-50 resize-none font-bold text-slate-800 focus:ring-2 focus:ring-green-500 transition shadow-inner"></textarea>
+                <button onclick="sendQuickWA()" class="w-full bg-green-600 text-white py-3 rounded-xl font-black mt-4 hover:bg-green-700 transition shadow-lg active:scale-95 flex items-center justify-center gap-3">
+                    সেন্ড মেসেজ <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Zoom Modal -->
-    <div id="zoom-modal" class="zoom-modal fixed inset-0 bg-black/95 z-[110] items-center justify-center p-4">
-        <button onclick="closeZoom()" class="absolute top-8 right-8 text-white hover:text-red-500"><i data-lucide="x" class="w-10 h-10"></i></button>
-        <img id="zoomed-img" src="" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl">
+    <!-- Admin Panel -->
+    <div id="admin-modal" class="admin-modal fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-[100] items-center justify-center p-4">
+        <!-- Login -->
+        <div id="admin-login" class="bg-white p-10 rounded-[3rem] shadow-2xl w-full max-w-sm border border-slate-100">
+            <div class="text-center mb-10">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="shield-check" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">SECURE LOGIN</h3>
+            </div>
+            <input type="password" id="admin-pass-in" placeholder="PIN" class="w-full border-2 border-slate-100 p-4 rounded-2xl mb-6 outline-none focus:border-blue-600 transition text-center font-black bg-slate-50 text-2xl tracking-[0.5em]">
+            <button onclick="verifyAdmin()" class="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition-transform">ACCESS DASHBOARD</button>
+            <button onclick="closeAdminModal()" class="w-full text-slate-400 mt-8 text-[10px] font-black uppercase tracking-[0.3em] hover:text-slate-900">CANCEL</button>
+        </div>
+
+        <!-- Master Dashboard (Compact UI) -->
+        <div id="admin-dashboard" class="bg-white p-6 md:p-8 rounded-[4rem] shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-y-auto hidden border border-slate-100 admin-scroll">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b pb-8 gap-4">
+                <div>
+                    <h3 class="text-3xl font-black text-slate-900">Master Control Panel</h3>
+                    <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.4em] mt-1">Enterprise Management v14.0</p>
+                </div>
+                <button onclick="closeAdminModal()" class="bg-slate-100 text-slate-500 p-3 rounded-2xl hover:bg-red-500 hover:text-white transition-all"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Col 1 -->
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-[2.5rem] border border-slate-200">
+                        <h4 class="font-black text-blue-600 text-xs uppercase tracking-widest border-b border-blue-50 pb-2 mb-6">System Config</h4>
+                        <div class="space-y-4">
+                            <input type="text" id="db-logo" placeholder="Logo URL" class="w-full border p-3 rounded-xl text-xs font-bold bg-white">
+                            <input type="text" id="db-wa" placeholder="WhatsApp Number" class="w-full border p-3 rounded-xl text-xs font-bold bg-white">
+                            <input type="text" id="db-email" placeholder="Corporate Email" class="w-full border p-3 rounded-xl text-xs font-bold bg-white">
+                            <input type="text" id="db-sheet" placeholder="Google Sheet CSV URL" class="w-full border p-3 rounded-xl text-xs font-bold bg-white">
+                            <textarea id="db-addr" placeholder="Office Address" class="w-full border p-3 rounded-xl text-xs font-bold bg-white" rows="2"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-900 p-8 rounded-[2.5rem] shadow-xl text-white">
+                        <h4 class="font-black text-blue-400 text-[10px] uppercase tracking-widest border-b border-white/10 pb-2 mb-6">Slider Manager</h4>
+                        <div id="db-slider-inputs" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-[2.5rem] border border-slate-200">
+                        <h4 class="font-black text-blue-600 text-xs uppercase tracking-widest border-b border-blue-50 pb-2 mb-6">Hero & Menu</h4>
+                        <div class="space-y-3">
+                            <input type="text" id="db-htitle" placeholder="Main Hero Title" class="w-full border p-3 rounded-xl text-xs bg-white font-bold">
+                            <textarea id="db-hsub" placeholder="Hero Subtitle" rows="2" class="w-full border p-3 rounded-xl text-xs bg-white font-bold"></textarea>
+                        </div>
+                        <div class="mt-6 p-4 bg-white rounded-3xl border border-slate-100">
+                            <p class="text-[9px] font-black uppercase text-slate-400 mb-3 ml-1">Menu Items</p>
+                            <div id="db-nav-list" class="space-y-1 mb-4 max-h-40 overflow-y-auto pr-1 admin-scroll"></div>
+                            <div class="flex flex-col gap-2">
+                                <input type="text" id="db-nav-name" placeholder="Name" class="border-none bg-slate-50 p-2 rounded-lg text-xs font-bold">
+                                <input type="text" id="db-nav-url" placeholder="URL (#)" class="border-none bg-slate-50 p-2 rounded-lg text-xs font-bold">
+                                <button onclick="addNavLink()" id="nav-action-btn" class="bg-blue-600 text-white py-2 rounded-lg font-black text-[9px] uppercase transition-all hover:bg-blue-700">ADD ITEM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-6 rounded-[2.5rem] border border-slate-200">
+                        <h4 class="font-black text-blue-600 text-xs uppercase tracking-widest border-b border-blue-50 pb-2 mb-6">SEO Blocks</h4>
+                        <div id="db-seo-list" class="space-y-3 mb-6 admin-scroll max-h-[250px]"></div>
+                        <div class="p-4 bg-white rounded-3xl border border-slate-100">
+                            <p class="text-[9px] font-black uppercase text-blue-500 mb-3">Add Section</p>
+                            <input type="text" id="db-seo-title" placeholder="Title" class="w-full border p-2 rounded-lg text-xs font-bold mb-2 bg-slate-50">
+                            <textarea id="db-seo-body" placeholder="Content..." rows="3" class="w-full border p-2 rounded-lg text-xs font-bold bg-slate-50"></textarea>
+                            <button onclick="addSEOSection()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-black text-[9px] uppercase mt-2">DEPLOY BLOCK</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[2.5rem] border-4 border-red-50">
+                        <h4 class="font-black text-red-500 text-[10px] uppercase tracking-widest mb-4">Security & Dev</h4>
+                        <input type="password" id="db-newpass" placeholder="New PIN" class="w-full border p-3 rounded-xl text-xs font-black bg-red-50/10 mb-3 outline-none">
+                        <input type="text" id="db-dev-name" placeholder="Dev Text" class="w-full border p-2 rounded-lg text-[9px] font-bold bg-slate-50 mb-2">
+                        <input type="text" id="db-dev-url" placeholder="Dev URL" class="w-full border p-2 rounded-lg text-[9px] font-bold bg-slate-50">
+                    </div>
+                </div>
+
+                <!-- Social Admin (Compact row) -->
+                <div class="lg:col-span-3 bg-slate-900 p-10 rounded-[3rem] text-white">
+                    <h4 class="font-black text-blue-400 mb-8 text-xs uppercase tracking-widest">Connect Social Channels</h4>
+                    <div id="db-social-list" class="flex flex-wrap gap-3 mb-10"></div>
+                    <div class="flex flex-wrap gap-4 p-6 bg-white/5 rounded-[2.5rem] border border-white/5">
+                        <select id="db-social-icon" class="bg-slate-800 border-none p-4 rounded-2xl text-xs text-white font-black">
+                            <option value="facebook">Facebook</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">Twitter / X</option>
+                            <option value="linkedin">LinkedIn</option>
+                        </select>
+                        <input type="text" id="db-social-url" placeholder="Profile URL" class="flex-[3] bg-slate-800 border-none p-4 rounded-2xl text-xs text-white outline-none font-bold">
+                        <button onclick="addSocial()" class="bg-blue-600 px-12 rounded-2xl font-black uppercase text-[10px] shadow-2xl hover:bg-blue-700 transition">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 p-8 bg-blue-600 rounded-[3.5rem] text-center shadow-2xl hover:bg-blue-700 transition-all cursor-pointer group active:scale-95" onclick="saveAllSettings()">
+                <h3 class="text-2xl font-black text-white uppercase tracking-tighter group-hover:scale-105 transition-transform">SAVE ALL SETTINGS & SYNC</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zoom View -->
+    <div id="zoom-modal" class="zoom-modal fixed inset-0 bg-slate-950/98 z-[110] items-center justify-center p-4">
+        <button onclick="closeZoom()" class="absolute top-10 right-10 text-white bg-white/10 p-5 rounded-full hover:bg-red-500 transition-all shadow-2xl"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <img id="zoomed-img" src="" class="max-w-full max-h-[85vh] rounded-[3.5rem] shadow-2xl animate-in zoom-in-95 duration-500">
     </div>
 
     <script>
-        // Default Data
+        // --- MASTER STATE MANAGEMENT ---
         let appState = {
             pass: "123",
             config: {
-                logo: "",
+                logo: "logo.png",
                 wa: "+880 1849-513358",
-                sheet: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRie9jFj_oVU_sz9tp91gjCcUYOT8ZktyWJdl3jy5pZCpLldgLeCKaA-Mmkj969qbBvQgKlAblmt4pj/pub?output=csv",
+                email: "ssbagsbd8@gmail.com",
+                sheet: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRie9jFj_oVU_sz9tp91gjCcUYOT8ZktyWJdl3jy5pZCpLldgLeCKaA-Mmkj969qbBvQgKlAblmt4pj/pub?gid=0&single=true&output=csv",
                 addr: "১৫১/১ বামনশুর হাউজিং (নরন্দি হাউজিং), রোড নং-০৫, কেরানীগঞ্জ, ঢাকা, বাংলাদেশ, ১৩১০",
                 copy: "© 2026 S.S. BAGS - All Rights Reserved.",
-                hTitle: "আপনার কোম্পানি বা ইভেন্টের জন্য সেরা কাস্টম ব্যাগ",
-                hSub: "আমরা সরাসরি ফ্যাক্টরি থেকে সেরা মানের ব্যাগ সরবরাহ করি এবং আপনার পছন্দের যেকোনো লোগো বা ডিজাইনে তা কাস্টমাইজ করে দিই।",
-                sTitle: "S.S. BAGS - প্রিমিয়াম কোয়ালিটি কাস্টমাইজড ব্যাগ প্রস্তুতকারক",
-                sBody: "আমরা স্কুল, কলেজ এবং অফিস ব্যাগের সেরা সংগ্রহ নিশ্চিত করি। আমাদের বিশেষত্ব হলো সরাসরি নিজস্ব ফ্যাক্টরি থেকে সরবরাহ এবং পাইকারি মূল্য। আপনি চাইলে আপনার স্কুল বা অফিসের লোগো দিয়ে ব্যাগগুলো নিখুঁতভাবে কাস্টমাইজ করে নিতে পারেন। কর্পোরেট এবং প্রমোশনাল গিফটের জন্য আমাদের ব্যাগগুলো এখন জনপ্রিয়তার শীর্ষে।",
-                sSidebar: "ব্যবসায়িক পরিচয় তুলে ধরুন প্রিমিয়াম মানের ব্যাগের মাধ্যমে। আপনার ব্র্যান্ডের সুনাম ছড়িয়ে দিতে কাস্টম ডিজাইনের ব্যাগ তৈরি করুন আমাদের সাথে।",
+                devName: "Designed and Developed by: msnCloud.net",
+                devUrl: "https://msnCloud.net",
+                hTitle: "বাংলাদেশের ১নং প্রিমিয়াম ব্যাগ ফ্যাক্টরি",
+                hSub: "সরাসরি নিজস্ব ফ্যাক্টরি থেকে সেরা মানের স্কুল, কলেজ এবং অফিস ব্যাগ সংগ্রহ করুন পাইকারি মূল্যে। আপনার ব্র্যান্ডের লোগোসহ কাস্টমাইজ করুন আমাদের সাথে।",
+                sliderImages: ["1.jpg", "2.jpg", "3.jpg", "4.jpg"],
+                navLinks: [
+                    { name: "হোম", url: "#home", icon: "home" },
+                    { name: "পণ্যসমূহ", url: "#products", icon: "shopping-bag" },
+                    { name: "বিশেষত্ব", url: "#features", icon: "award" },
+                    { name: "বিস্তারিত", url: "#dynamic-content-blocks", icon: "info" }
+                ],
                 social: [
                     { icon: 'facebook', url: 'https://www.facebook.com/ssbagbd' },
-                    { icon: 'YouTube', url: 'https://www.youtube.com/@ssbags2025' }
+                    { icon: 'youtube', url: 'https://www.youtube.com/@ssbags2025' }
+                ],
+                seoSections: [
+                    { 
+                        title: "কেন S.S. BAGS আপনার সেরা পছন্দ?", 
+                        body: "আমরা প্রতিটি ব্যাগ তৈরিতে ব্যবহার করি আধুনিক প্রযুক্তির মেশিনারিজ এবং উচ্চমানের ফেব্রিক্স। সরাসরি ম্যানুফ্যাকচারার হওয়ায় ক্রেতারা পাচ্ছেন বাজারের সেরা সাশ্রয়ী মূল্য এবং প্রিমিয়াম ফিনিশিং।"
+                    },
+                    { 
+                        title: "কাস্টমাইজড প্রমোশনাল ব্যাগ সলিউশন", 
+                        body: "আপনার কোম্পানি, স্কুল বা বড় ইভেন্টের ব্র্যান্ডিং এর জন্য কাস্টমাইজড ব্যাগ এখন সবথেকে কার্যকর উপায়। আমরা আপনার দেওয়া লোগো এবং কালার থিমে দ্রুততম সময়ের মধ্যে ব্যাগ ডেলিভারি নিশ্চিত করি।"
+                    }
                 ],
                 features: [
-                    { icon: 'factory', title: 'সরাসরি ফ্যাক্টরি' },
-                    { icon: 'edit-3', title: 'কাস্টম ডিজাইন' },
-                    { icon: 'check-circle', title: 'পাইকারি মূল্য' },
-                    { icon: 'briefcase', title: 'কর্পোরেট গিফট' },
-                    { icon: 'truck', title: 'দ্রুত ডেলিভারি' }
+                    { icon: 'factory', title: 'নিজস্ব ফ্যাক্টরি', desc: 'সরাসরি সরবরাহ' },
+                    { icon: 'edit-3', title: 'কাস্টম ডিজাইন', desc: 'আপনার লোগো সহ' },
+                    { icon: 'shield-check', title: 'সেরা মান', desc: 'টেকসই ফেব্রিক্স' },
+                    { icon: 'award', title: 'পাইকারি মূল্য', desc: 'একদম সাশ্রয়ী' },
+                    { icon: 'truck', title: 'দ্রুত ডেলিভারি', desc: 'সারা দেশে সাপ্লাই' }
                 ]
             }
         };
 
-        // Persistent Load
-        if(localStorage.getItem('ss_bags_v5_data')) {
-            appState = JSON.parse(localStorage.getItem('ss_bags_v5_data'));
+        let editingNavIndex = -1;
+        if(localStorage.getItem('ss_bags_v14_enterprise')) appState = JSON.parse(localStorage.getItem('ss_bags_v14_enterprise'));
+
+        // --- Slider Engine ---
+        let currentSlide = 0;
+        function initSlider() {
+            const slider = document.getElementById('hero-slider');
+            const dots = document.getElementById('slider-dots');
+            slider.innerHTML = ''; dots.innerHTML = '';
+            appState.config.sliderImages.forEach((img, index) => {
+                const div = document.createElement('div');
+                div.className = `slide ${index === 0 ? 'active' : ''}`;
+                div.style.backgroundImage = `url('${img}')`;
+                slider.appendChild(div);
+                const dot = document.createElement('button');
+                dot.className = `w-3.5 h-3.5 rounded-full transition-all duration-500 ${index === 0 ? 'bg-blue-600 w-10' : 'bg-slate-300'}`;
+                dot.onclick = () => showSlide(index);
+                dots.appendChild(dot);
+            });
         }
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('#slider-dots button');
+            if(!slides.length) return;
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('bg-blue-600', 'w-10');
+            dots[currentSlide].classList.add('bg-slate-300');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('bg-blue-600', 'w-10');
+            dots[currentSlide].classList.remove('bg-slate-300');
+        }
+        setInterval(() => showSlide((currentSlide + 1) % appState.config.sliderImages.length), 7500);
 
+        // --- UI Rendering Engine ---
         function initApp() {
-            // Header/Hero
-            document.getElementById('site-logo').src = appState.config.logo;
-            document.getElementById('hero-title').innerText = appState.config.hTitle;
-            document.getElementById('hero-sub').innerText = appState.config.hSub;
+            const c = appState.config;
+            document.getElementById('site-logo').src = c.logo;
+            document.getElementById('hero-title').innerText = c.hTitle;
+            document.getElementById('hero-sub').innerText = c.hSub;
+            document.getElementById('footer-addr').innerText = c.addr;
+            document.getElementById('footer-wa').innerText = c.wa;
+            document.getElementById('footer-email').innerText = c.email;
+            document.getElementById('footer-copy').innerText = c.copy;
+            document.getElementById('footer-about').innerText = c.hSub.substring(0, 150) + "...";
+            document.getElementById('dev-info-display').innerText = c.devName;
+
+            // Navigations
+            document.getElementById('header-nav-links').innerHTML = c.navLinks.map(l => `<a href="${l.url}" class="nav-link"><i data-lucide="${l.icon || 'link'}" class="w-4 h-4"></i> ${l.name}</a>`).join('');
+            document.getElementById('footer-nav-links').innerHTML = c.navLinks.map(l => `<li><a href="${l.url}" class="hover:text-blue-400 transition-all">${l.name}</a></li>`).join('');
             
-            // SEO Section
-            document.getElementById('seo-title').innerText = appState.config.sTitle;
-            const bodyLines = appState.config.sBody.split('\n');
-            document.getElementById('seo-body').innerHTML = bodyLines.map(line => `<p>${line}</p>`).join('');
-            document.getElementById('seo-sidebar').innerText = appState.config.sSidebar;
-
-            // Footer
-            document.getElementById('footer-addr').innerText = appState.config.addr;
-            document.getElementById('footer-wa').innerText = appState.config.wa;
-            document.getElementById('footer-copy').innerText = appState.config.copy;
-            document.getElementById('footer-about').innerText = appState.config.sSidebar;
-
-            // WhatsApp
-            const cleanWA = appState.config.wa.replace(/\D/g, '');
-            document.getElementById('nav-wa-btn').href = `https://wa.me/${cleanWA}`;
+            // Socials - Fixed Lucide Icon Rendering
+            const sBox = document.getElementById('social-links');
+            sBox.innerHTML = c.social.map(s => {
+                const iconName = s.icon.toLowerCase();
+                return `<a href="${s.url}" target="_blank" class="social-btn bg-${iconName}"><i data-lucide="${iconName}"></i></a>`;
+            }).join('');
 
             // Features
-            const featContainer = document.getElementById('feat-container');
-            featContainer.innerHTML = appState.config.features.map(f => `
-                <div class="bg-gray-50 p-6 rounded-2xl hover:bg-blue-50 transition border border-gray-100">
-                    <div class="text-blue-600 mb-3 flex justify-center"><i data-lucide="${f.icon}"></i></div>
-                    <h4 class="font-bold text-sm">${f.title}</h4>
-                </div>
-            `).join('');
+            document.getElementById('feat-grid').innerHTML = c.features.map(f => `
+                <div class="feat-card group">
+                    <div class="text-blue-600 mb-4 flex justify-center group-hover:scale-110 transition-transform"><i data-lucide="${f.icon}" class="w-7 h-7"></i></div>
+                    <h4 class="font-black text-[13px] uppercase tracking-wider text-slate-900 mb-2">${f.title}</h4>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">${f.desc}</p>
+                </div>`).join('');
 
-            // Social
-            const sBox = document.getElementById('social-links');
-            sBox.innerHTML = appState.config.social.map(s => `
-                <a href="${s.url}" target="_blank" class="p-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition"><i data-lucide="${s.icon}" class="w-5 h-5"></i></a>
-            `).join('');
+            // SEO Content Blocks
+            document.getElementById('dynamic-content-blocks').innerHTML = c.seoSections.map(s => `
+                <div class="container mx-auto px-4">
+                    <div class="max-w-5xl mx-auto bg-slate-50 p-10 lg:p-16 rounded-[4rem] border border-slate-100 shadow-sm relative overflow-hidden">
+                        <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-600/5 rounded-full blur-3xl"></div>
+                        <h2 class="text-3xl md:text-5xl font-black text-blue-900 mb-8 relative z-10">${s.title}</h2>
+                        <p class="text-slate-600 text-lg lg:text-xl bn-body relative z-10 leading-relaxed">${s.body}</p>
+                    </div>
+                </div>`).join('');
 
+            // Ensure Lucide icons are rendered after HTML insertion
             lucide.createIcons();
+            initSlider();
             fetchProducts();
         }
 
         async function fetchProducts() {
             const grid = document.getElementById('product-grid');
             const loader = document.getElementById('product-loader');
-            const url = appState.config.sheet.trim();
-            
-            if(!url) {
-                grid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-400">শিট লিঙ্ক সেট করা নেই।</p>';
-                loader.style.display = 'none';
-                return;
-            }
-
+            if(!appState.config.sheet) { loader.style.display='none'; return; }
             try {
-                const res = await fetch(url);
+                const res = await fetch(appState.config.sheet.trim());
                 const text = await res.text();
                 const rows = text.split(/\r?\n/).filter(l => l.trim() !== "").slice(1);
-                
                 grid.innerHTML = '';
                 rows.forEach(row => {
                     const cols = row.split(',').map(c => c.replace(/^"|"$/g, '').trim());
                     if(cols.length >= 3) {
                         const [name, price, img] = cols;
                         grid.innerHTML += `
-                            <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition border p-3 group">
-                                <div class="aspect-square relative overflow-hidden bg-gray-100 rounded-xl">
-                                    <img src="${img}" class="w-full h-full object-cover transition duration-500">
-                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
-                                        <button onclick="openZoom('${img}')" class="bg-white p-2 rounded-full"><i data-lucide="zoom-in"></i></button>
-                                        <button onclick="buyNow('${name}', '${price}', '${img}')" class="bg-green-500 text-white p-2 rounded-full"><i data-lucide="shopping-cart"></i></button>
+                            <div class="bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 border border-slate-100 p-6 group">
+                                <div class="aspect-[4/5] relative overflow-hidden bg-slate-50 rounded-[2.5rem]">
+                                    <img src="${img}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-6">
+                                        <button onclick="openZoom('${img}')" class="bg-white/20 backdrop-blur-xl p-5 rounded-2xl text-white hover:bg-blue-600 transition shadow-xl"><i data-lucide="maximize-2"></i></button>
+                                        <button onclick="buyNow('${name}', '${price}', '${img}')" class="bg-green-500 p-5 rounded-2xl text-white hover:bg-green-600 transition shadow-xl"><i data-lucide="shopping-cart"></i></button>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h4 class="font-bold text-gray-800 truncate">${name}</h4>
-                                    <p class="text-blue-600 font-black text-lg">৳ ${price}</p>
+                                <div class="p-6 text-center">
+                                    <h4 class="font-black text-slate-900 truncate text-xl bn-sharp mb-2">${name}</h4>
+                                    <div class="bg-blue-50 py-2 px-6 rounded-2xl inline-block border border-blue-100">
+                                        <p class="text-blue-700 font-black text-2xl tracking-tighter">৳ ${price}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                     }
                 });
                 lucide.createIcons();
-            } catch (err) {
-                grid.innerHTML = '<p class="col-span-full text-center py-10 text-red-500 font-bold">ডাটা লোড হয়নি। লিঙ্ক চেক করুন।</p>';
-            } finally {
-                loader.style.display = 'none';
-            }
+            } catch (err) { grid.innerHTML = '<p class="col-span-full text-center font-bold text-red-500 py-10">Data Connection Error</p>'; }
+            finally { loader.style.display = 'none'; }
         }
 
+        // Actions
         function buyNow(n, p, i) {
-            const cleanWA = appState.config.wa.replace(/\D/g, '');
-            const msg = `হ্যালো S.S. BAGS! আমি এই প্রোডাক্টটি নিতে চাই:\n\nপণ্য: ${n}\nদাম: ৳${p}\nছবি: ${i}`;
-            window.open(`https://wa.me/${cleanWA}?text=${encodeURIComponent(msg)}`, '_blank');
+            const msg = `আসসালামু আলাইকুম S.S. BAGS! আমি এই ব্যাগটি সম্পর্কে জানতে চাই:\n\nপণ্য: ${n}\nদাম: ৳${p}\nছবি: ${i}`;
+            window.open(`https://wa.me/${appState.config.wa.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
-
         function toggleWAPopup() { document.getElementById('wa-popup').classList.toggle('active'); }
         function sendQuickWA() {
             const txt = document.getElementById('wa-msg-input').value;
             if(!txt) return;
-            const cleanWA = appState.config.wa.replace(/\D/g, '');
-            window.open(`https://wa.me/${cleanWA}?text=${encodeURIComponent(txt)}`, '_blank');
+            window.open(`https://wa.me/${appState.config.wa.replace(/\D/g, '')}?text=${encodeURIComponent(txt)}`, '_blank');
             document.getElementById('wa-msg-input').value = '';
+            toggleWAPopup();
         }
 
         function openZoom(i) { document.getElementById('zoomed-img').src = i; document.getElementById('zoom-modal').classList.add('active'); }
         function closeZoom() { document.getElementById('zoom-modal').classList.remove('active'); }
 
-        // Admin Functions
+        // --- Admin Controls ---
         function openAdminModal() { document.getElementById('admin-modal').classList.add('active'); }
         function closeAdminModal() {
             document.getElementById('admin-modal').classList.remove('active');
             document.getElementById('admin-login').classList.remove('hidden');
             document.getElementById('admin-dashboard').classList.add('hidden');
         }
-
         function verifyAdmin() {
-            const pin = document.getElementById('admin-pass-in').value;
-            if(pin === appState.pass) {
+            if(document.getElementById('admin-pass-in').value === appState.pass) {
                 document.getElementById('admin-login').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 fillDash();
-            } else { alert("ভুল পাসওয়ার্ড!"); }
+            } else alert("ACCESS DENIED: WRONG PIN");
         }
 
         function fillDash() {
             const c = appState.config;
             document.getElementById('db-logo').value = c.logo;
             document.getElementById('db-wa').value = c.wa;
+            document.getElementById('db-email').value = c.email;
             document.getElementById('db-sheet').value = c.sheet;
             document.getElementById('db-addr').value = c.addr;
             document.getElementById('db-htitle').value = c.hTitle;
             document.getElementById('db-hsub').value = c.hSub;
-            document.getElementById('db-stitle').value = c.sTitle;
-            document.getElementById('db-sbody').value = c.sBody;
+            document.getElementById('db-dev-name').value = c.devName;
+            document.getElementById('db-dev-url').value = c.devUrl;
+            
             renderSocialDash();
+            renderNavDash();
+            renderSEODash();
+            
+            document.getElementById('db-slider-inputs').innerHTML = c.sliderImages.map((img, i) => `
+                <div class="flex items-center gap-2">
+                    <span class="text-[8px] font-black text-blue-300 uppercase">Slide ${i+1}</span>
+                    <input type="text" value="${img}" onchange="appState.config.sliderImages[${i}] = this.value" class="flex-1 bg-white/5 border border-white/10 p-2.5 rounded-xl text-[10px] text-white outline-none">
+                </div>`).join('');
+            
+            lucide.createIcons();
         }
+
+        function renderSEODash() {
+            document.getElementById('db-seo-list').innerHTML = appState.config.seoSections.map((s, i) => `
+                <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm relative group">
+                    <button onclick="removeSEO(${i})" class="absolute top-4 right-4 text-red-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
+                    <input type="text" value="${s.title}" onchange="appState.config.seoSections[${i}].title = this.value" class="w-full border-none p-0 text-xs font-black mb-2 focus:ring-0">
+                    <textarea onchange="appState.config.seoSections[${i}].body = this.value" class="w-full border-none p-0 text-[10px] text-slate-500 focus:ring-0" rows="2">${s.body}</textarea>
+                </div>`).join('');
+            lucide.createIcons();
+        }
+        function addSEOSection() {
+            const t = document.getElementById('db-seo-title').value, b = document.getElementById('db-seo-body').value;
+            if(t && b) { appState.config.seoSections.push({title:t, body:b}); document.getElementById('db-seo-title').value=''; document.getElementById('db-seo-body').value=''; renderSEODash(); }
+        }
+        function removeSEO(i) { appState.config.seoSections.splice(i, 1); renderSEODash(); }
+
+        function renderNavDash() {
+            document.getElementById('db-nav-list').innerHTML = appState.config.navLinks.map((l, i) => `
+                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-100 shadow-sm transition-all">
+                    <span class="font-black text-slate-700 text-[10px] uppercase">${l.name}</span>
+                    <div class="flex gap-1.5">
+                        <button onclick="editNavLink(${i})" class="p-1.5 text-blue-500 bg-blue-50 rounded-lg hover:bg-blue-600 hover:text-white transition"><i data-lucide="edit-3" class="w-3 h-3"></i></button>
+                        <button onclick="removeNavLink(${i})" class="p-1.5 text-red-500 bg-red-50 rounded-lg hover:bg-red-600 hover:text-white transition"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
+                    </div>
+                </div>`).join('');
+            lucide.createIcons();
+        }
+        function editNavLink(i) {
+            const l = appState.config.navLinks[i];
+            document.getElementById('db-nav-name').value = l.name;
+            document.getElementById('db-nav-url').value = l.url;
+            editingNavIndex = i;
+            document.getElementById('nav-action-btn').innerText = "UPDATE ITEM";
+        }
+        function addNavLink() {
+            const n = document.getElementById('db-nav-name').value, u = document.getElementById('db-nav-url').value;
+            if(!n || !u) return;
+            if(editingNavIndex > -1) { 
+                appState.config.navLinks[editingNavIndex] = {name:n, url:u, icon:'link'}; 
+                editingNavIndex = -1; 
+                document.getElementById('nav-action-btn').innerText = "ADD ITEM";
+            } else appState.config.navLinks.push({name:n, url:u, icon:'link'});
+            document.getElementById('db-nav-name').value=''; document.getElementById('db-nav-url').value=''; renderNavDash();
+        }
+        function removeNavLink(i) { appState.config.navLinks.splice(i, 1); renderNavDash(); }
 
         function renderSocialDash() {
-            const list = document.getElementById('db-social-list');
-            list.innerHTML = appState.config.social.map((s, i) => `
-                <div class="flex justify-between items-center bg-white p-2 rounded border text-xs">
-                    <span>${s.icon}: ${s.url}</span>
-                    <button onclick="removeSocial(${i})" class="text-red-500 font-bold">X</button>
-                </div>
-            `).join('');
+            document.getElementById('db-social-list').innerHTML = appState.config.social.map((s, i) => `<div class="bg-white/5 p-4 rounded-2xl border border-white/5 flex justify-between items-center"><span class="text-[9px] font-black uppercase text-blue-300 italic tracking-widest">${s.icon} Channel</span><button onclick="removeSocial(${i})" class="text-red-500 font-black px-4 py-1 hover:bg-red-500/10 rounded-xl transition text-[9px]">REMOVE</button></div>`).join('');
         }
-
         function addSocial() {
-            const icon = document.getElementById('db-social-icon').value;
-            const url = document.getElementById('db-social-url').value;
-            if(!url) return;
-            appState.config.social.push({ icon, url });
-            document.getElementById('db-social-url').value = '';
-            renderSocialDash();
+            const i = document.getElementById('db-social-icon').value, u = document.getElementById('db-social-url').value;
+            if(u) { appState.config.social.push({icon:i, url:u}); document.getElementById('db-social-url').value=''; renderSocialDash(); }
         }
-
         function removeSocial(i) { appState.config.social.splice(i, 1); renderSocialDash(); }
 
         function saveAllSettings() {
             const newP = document.getElementById('db-newpass').value;
-            if(newP.trim() !== "") appState.pass = newP;
-
+            if(newP.trim()) appState.pass = newP;
             const c = appState.config;
             c.logo = document.getElementById('db-logo').value;
             c.wa = document.getElementById('db-wa').value;
+            c.email = document.getElementById('db-email').value;
             c.sheet = document.getElementById('db-sheet').value;
             c.addr = document.getElementById('db-addr').value;
             c.hTitle = document.getElementById('db-htitle').value;
             c.hSub = document.getElementById('db-hsub').value;
-            c.sTitle = document.getElementById('db-stitle').value;
-            c.sBody = document.getElementById('db-sbody').value;
-
-            localStorage.setItem('ss_bags_v5_data', JSON.stringify(appState));
-            initApp();
-            closeAdminModal();
-            alert("সব তথ্য আপডেট করা হয়েছে!");
+            c.devName = document.getElementById('db-dev-name').value;
+            c.devUrl = document.getElementById('db-dev-url').value;
+            localStorage.setItem('ss_bags_v14_enterprise', JSON.stringify(appState));
+            initApp(); closeAdminModal(); alert("SYSTEM STATUS: UPDATES DEPLOYED!");
         }
 
         window.onload = initApp;
