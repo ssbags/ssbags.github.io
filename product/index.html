@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MsnCloud Image Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; }
+        .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); }
+        .img-card:hover .overlay { opacity: 1; }
+        .modal-transition { transition: all 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+    <!-- নেভিগেশন বার -->
+    <nav class="sticky top-0 z-50 glass border-b border-slate-800 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-xl shadow-lg">
+                    <i class="fas fa-cloud-meatball text-white text-xl"></i>
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300">
+                    MsnCloud Image Engine
+                </h1>
+            </div>
+            <div id="auth-section">
+                <!-- ডাইনামিক বাটন এখানে আসবে -->
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6 md:p-10">
+        
+        <!-- অ্যাডমিন প্যানেল (লগইন থাকলে দেখাবে) -->
+        <div id="admin-panel" class="hidden mb-12 bg-slate-900/50 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <h2 class="text-lg font-bold text-slate-100">অ্যাডমিন কন্ট্রোল প্যানেল</h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="w-full md:w-2/3">
+                    <label class="group relative flex flex-col items-center justify-center w-full h-40 border-2 border-slate-700 border-dashed rounded-2xl cursor-pointer bg-slate-950/50 hover:bg-slate-900 hover:border-blue-500 transition-all duration-300">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <i class="fas fa-file-import text-slate-500 text-3xl mb-3 group-hover:text-blue-400 transition-colors"></i>
+                            <p class="text-sm text-slate-400">নতুন ছবি আপলোড করতে এখানে ক্লিক করুন</p>
+                            <p class="text-xs text-slate-500 mt-2 italic">সর্বোচ্চ ৫ এমবি (PNG, JPG, WEBP)</p>
+                        </div>
+                        <input type="file" id="image-upload" class="hidden" accept="image/*" />
+                    </label>
+                </div>
+                <div id="upload-status" class="hidden w-full md:w-1/3 text-center p-6 bg-slate-950 rounded-2xl border border-slate-800">
+                    <div class="animate-spin text-blue-500 text-2xl mb-2"><i class="fas fa-spinner"></i></div>
+                    <p class="text-sm">আপলোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- গ্যালারি সেকশন -->
+        <div class="mb-8 flex items-center justify-between">
+            <h3 class="text-xl font-semibold flex items-center gap-2 text-slate-400">
+                <i class="fas fa-th-large"></i> গ্যালারি
+            </h3>
+            <div id="image-count" class="text-sm text-slate-500">ইমেজ লোড হচ্ছে...</div>
+        </div>
+
+        <div id="image-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+            <!-- ইমেজ কার্ড এখানে আসবে -->
+        </div>
+
+        <!-- এম্পটি স্টেট -->
+        <div id="empty-state" class="hidden py-32 text-center text-slate-600">
+            <i class="fas fa-images text-7xl mb-6 opacity-20"></i>
+            <p class="text-xl">কোন ইমেজ পাওয়া যায়নি!</p>
+        </div>
+    </main>
+
+    <!-- লগইন মডাল -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-md p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-3xl p-8 shadow-2xl relative">
+            <button onclick="closeModal('login-modal')" class="absolute top-5 right-5 text-slate-500 hover:text-white transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-center mb-8">
+                <div class="bg-blue-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-500 text-2xl">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2 class="text-2xl font-bold">অ্যাডমিন লগইন</h2>
+                <p class="text-sm text-slate-500 mt-1">সিস্টেম ম্যানেজ করতে পাসওয়ার্ড দিন</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="admin-pass" placeholder="পাসওয়ার্ড লিখুন" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 focus:outline-none focus:border-blue-500 transition text-center tracking-widest">
+                <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl transition shadow-xl active:scale-95">
+                    লগইন করুন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- জুম মডাল -->
+    <div id="zoom-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 p-4" onclick="closeModal('zoom-modal')">
+        <button class="absolute top-6 right-6 text-white text-3xl hover:text-slate-400 transition z-[110]">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="zoomed-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain animate-in zoom-in duration-300" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- রিনেম মডাল -->
+    <div id="rename-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-3xl p-8 relative shadow-2xl">
+            <button onclick="closeModal('rename-modal')" class="absolute top-5 right-5 text-slate-500 hover:text-white transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-xl font-bold mb-2">ইমেজ রিনেম</h2>
+            <p class="text-xs text-slate-500 mb-6 italic">* স্পেস ছাড়া নতুন নাম লিখুন</p>
+            <div class="space-y-4">
+                <input type="hidden" id="rename-id">
+                <input type="text" id="new-name-input" placeholder="নতুন নাম লিখুন" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 focus:outline-none focus:border-blue-500 transition">
+                <button onclick="handleRename()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-4 rounded-xl transition shadow-lg active:scale-95">
+                    রিনেম নিশ্চিত করুন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- কপিড টোস্ট -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-2xl opacity-0 invisible transition-all duration-300 z-[200]">
+        <i class="fas fa-check-circle mr-2"></i> লিংক কপি করা হয়েছে!
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Firebase Configuration (Using Environment Variables)
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'msncloud-image-engine';
+
+        // State Management
+        let user = null;
+        let isAdmin = false;
+        let imagesList = [];
+
+        // Authentication Initialization
+        const initAuth = async () => {
+            await signInAnonymously(auth);
+            onAuthStateChanged(auth, (u) => {
+                user = u;
+                renderUI();
+                if (user) listenToImages();
+            });
+        };
+        initAuth();
+
+        // Listen to Images in Firestore
+        const listenToImages = () => {
+            const imagesRef = collection(db, 'artifacts', appId, 'public', 'data', 'images');
+            onSnapshot(imagesRef, (snapshot) => {
+                imagesList = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                // Sort images by date added (newest first)
+                imagesList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                renderGallery();
+            }, (error) => console.error("Firestore Error:", error));
+        };
+
+        // Render UI Elements based on Admin State
+        const renderUI = () => {
+            const authSection = document.getElementById('auth-section');
+            const adminPanel = document.getElementById('admin-panel');
+
+            if (isAdmin) {
+                authSection.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="hidden md:block text-xs bg-green-500/10 text-green-500 px-3 py-1 rounded-full border border-green-500/20 font-bold uppercase tracking-wider">Admin Active</span>
+                        <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl text-sm transition font-bold shadow-lg shadow-red-500/20">লগআউট</button>
+                    </div>
+                `;
+                adminPanel.classList.remove('hidden');
+                document.getElementById('logout-btn').onclick = () => {
+                    isAdmin = false;
+                    renderUI();
+                    renderGallery();
+                };
+            } else {
+                authSection.innerHTML = `
+                    <button onclick="window.openModal('login-modal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2 rounded-xl text-sm transition font-bold border border-slate-700 shadow-xl">
+                        <i class="fas fa-lock mr-2"></i> অ্যাডমিন লগইন
+                    </button>
+                `;
+                adminPanel.classList.add('hidden');
+            }
+        };
+
+        // Render Gallery
+        const renderGallery = () => {
+            const grid = document.getElementById('image-grid');
+            const emptyState = document.getElementById('empty-state');
+            const countLabel = document.getElementById('image-count');
+
+            grid.innerHTML = '';
+            countLabel.innerText = `মোট ছবি: ${imagesList.length}`;
+
+            if (imagesList.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            imagesList.forEach(img => {
+                const card = document.createElement('div');
+                card.className = 'img-card bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-slate-700 transition-all duration-500 group';
+                card.innerHTML = `
+                    <div class="relative aspect-square overflow-hidden bg-slate-950">
+                        <img src="${img.url}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-zoom-in" onclick="window.zoomImage('${img.url}')">
+                        <div class="overlay absolute inset-0 bg-slate-950/60 opacity-0 transition-opacity duration-300 flex items-center justify-center gap-3">
+                            <button onclick="window.zoomImage('${img.url}')" class="bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 text-white transition transform translate-y-4 group-hover:translate-y-0 duration-500">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <a href="${img.url}" target="_blank" download class="bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 text-white transition transform translate-y-4 group-hover:translate-y-0 duration-500 delay-75">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-sm font-mono text-slate-400 truncate mb-4" title="${img.name}">${img.name}</p>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="window.copyLink('${img.url}', this)" class="w-full bg-slate-800 hover:bg-blue-600 py-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 border border-slate-700 hover:border-blue-500 active:scale-95">
+                                <i class="fas fa-link"></i> ডিরেক্ট ইউআরএল কপি
+                            </button>
+                        </div>
+                        ${isAdmin ? `
+                            <div class="mt-5 pt-4 border-t border-slate-800 flex justify-between">
+                                <button onclick="window.openRenameModal('${img.id}', '${img.name}')" class="text-amber-500 hover:text-amber-400 text-xs font-bold flex items-center gap-1 transition">
+                                    <i class="fas fa-edit"></i> রিনেম
+                                </button>
+                                <button onclick="window.handleDelete('${img.id}', '${img.storagePath}')" class="text-red-500 hover:text-red-400 text-xs font-bold flex items-center gap-1 transition">
+                                    <i class="fas fa-trash-alt"></i> ডিলিট
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        };
+
+        // Sequential Naming Logic
+        const getNextBagName = () => {
+            const bagFiles = imagesList.filter(img => img.name.startsWith('bag'));
+            let maxNum = 40; // Starts so that the first is 41
+            bagFiles.forEach(img => {
+                const match = img.name.match(/bag(\d+)/i);
+                if (match) {
+                    const num = parseInt(match[1]);
+                    if (num > maxNum) maxNum = num;
+                }
+            });
+            return `bag${maxNum + 1}`;
+        };
+
+        // Upload Logic
+        document.getElementById('image-upload').onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("ফাইলের সাইজ ৫ এমবি-র বেশি হওয়া যাবে না!");
+                return;
+            }
+
+            const status = document.getElementById('upload-status');
+            status.classList.remove('hidden');
+
+            try {
+                const ext = file.name.split('.').pop();
+                const newName = getNextBagName() + "." + ext;
+                const storagePath = `artifacts/${appId}/images/${Date.now()}_${newName}`;
+                const storageRef = ref(storage, storagePath);
+
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'images'), {
+                    name: newName,
+                    url: downloadURL,
+                    storagePath: storagePath,
+                    size: file.size,
+                    createdAt: Date.now()
+                });
+
+            } catch (err) {
+                console.error("Upload Error:", err);
+                alert("আপলোড ব্যর্থ হয়েছে।");
+            } finally {
+                status.classList.add('hidden');
+                e.target.value = '';
+            }
+        };
+
+        // Window exposed functions for Global Access
+        window.openModal = (id) => {
+            const m = document.getElementById(id);
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        };
+
+        window.closeModal = (id) => {
+            const m = document.getElementById(id);
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        };
+
+        window.handleLogin = () => {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === "123") {
+                isAdmin = true;
+                window.closeModal('login-modal');
+                document.getElementById('admin-pass').value = '';
+                renderUI();
+                renderGallery();
+            } else {
+                alert("ভুল পাসওয়ার্ড!");
+            }
+        };
+
+        window.zoomImage = (src) => {
+            document.getElementById('zoomed-img').src = src;
+            window.openModal('zoom-modal');
+        };
+
+        window.copyLink = (url, btn) => {
+            const el = document.createElement('textarea');
+            el.value = url;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0', 'invisible');
+            toast.classList.add('opacity-100', 'visible');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'invisible');
+                toast.classList.remove('opacity-100', 'visible');
+            }, 2500);
+        };
+
+        window.openRenameModal = (id, currentName) => {
+            const pureName = currentName.split('.').slice(0, -1).join('.');
+            document.getElementById('rename-id').value = id;
+            document.getElementById('new-name-input').value = pureName;
+            window.openModal('rename-modal');
+        };
+
+        window.handleRename = async () => {
+            const id = document.getElementById('rename-id').value;
+            const newNameRaw = document.getElementById('new-name-input').value.replace(/\s+/g, '');
+            if (!newNameRaw) return;
+
+            const image = imagesList.find(i => i.id === id);
+            const ext = image.name.split('.').pop();
+            const finalName = newNameRaw + "." + ext;
+
+            try {
+                const imgRef = doc(db, 'artifacts', appId, 'public', 'data', 'images', id);
+                await updateDoc(imgRef, { name: finalName });
+                window.closeModal('rename-modal');
+            } catch (err) {
+                alert("রিনেম ব্যর্থ হয়েছে।");
+            }
+        };
+
+        window.handleDelete = async (id, storagePath) => {
+            if (!confirm("আপনি কি নিশ্চিতভাবে এই ইমেজটি মুছে ফেলতে চান?")) return;
+
+            try {
+                // Delete from Storage
+                const storageRef = ref(storage, storagePath);
+                await deleteObject(storageRef);
+
+                // Delete from Firestore
+                const imgRef = doc(db, 'artifacts', appId, 'public', 'data', 'images', id);
+                await deleteDoc(imgRef);
+            } catch (err) {
+                console.error(err);
+                alert("মুছে ফেলা সম্ভব হয়নি।");
+            }
+        };
+
+    </script>
+</body>
+</html>
